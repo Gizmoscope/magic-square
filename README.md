@@ -20,3 +20,7 @@ compile code | run time of compiled program
 `gcc -O3 magic.c` | 1.24 seconds
 
 The best optimized programs runs 276% faster than the one without optimization. I think this is quite amazing.
+
+## The naive program
+
+Maybe the trick produces some overhead a naive program wouldn't have. However, under the assumption that the naive program would need 9! = 362880 times longer the my program then it would need about 450.000 seconds = 125 hours which are over 5 days.
