@@ -65,6 +65,6 @@ void main() {
     find(start, 0);
     free(start);
     prgende=clock();
-    printf("Es gibt %i magische Quadrate.\n", count);
-    printf("Laufzeit %.2f Sekunden\n",(float)(prgende-prgstart) / CLOCKS_PER_SEC);
+    printf("There are %i magic squares.\n", count);
+    printf("Runtime %.2f seconds\n",(float)(prgende-prgstart) / CLOCKS_PER_SEC);
 }
