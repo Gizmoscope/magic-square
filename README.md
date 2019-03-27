@@ -4,15 +4,19 @@ A magic square is a square grid of n x n numbers that contains ever number from 
 
 ## The trick
 
-Simply filling every permutation of (1, ..., n²) into a grid and check the magic square condition would need huge computation time. There are 16! = 20.922.789.888.000 permutations of (1, ..., 16). The trick is the following: Put all information we have for magic squares into a system of linear equations and look at the solution space. Lets denote the coefficients of the magic square by v_i, where i ranges from 1 to 16. We know for example that v_1 + v_2 + v_3 + v_4 = 34. There are 9 further equations like that. The coefficient matrix for the resulting system of linear equation is
+Simply filling every permutation of (1, ..., n²) into a grid and check the magic square condition would need huge computation time. There are 16! = 20.922.789.888.000 permutations of (1, ..., 16). The trick is the following: Put all information we have for magic squares into a system of linear equations and look at the solution space. Lets denote the coefficients of the magic square by x_i, where i ranges from 1 to 16. We know for example that x_1 + x_2 + x_3 + x_4 = 34. There are 9 further equations like that.
 
-1 1 1 1 0 0 0 0 0 0 0 0 0 0 0 0 | 34
-0 0 0 0 1 1 1 1 0 0 0 0 0 0 0 0 | 34
-0 0 0 0 0 0 0 0 1 1 1 1 0 0 0 0 | 34
-0 0 0 0 0 0 0 0 0 0 0 0 1 1 1 1 | 34
-1 0 0 0 1 0 0 0 1 0 0 0 1 0 0 0 | 34
-0 1 0 0 0 1 0 0 0 1 0 0 0 1 0 0 | 34
-0 0 1 0 0 0 1 0 0 0 1 0 0 0 1 0 | 34
-0 0 0 1 0 0 0 1 0 0 0 1 0 0 0 1 | 34
-1 0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 | 34
-0 0 0 1 0 0 1 0 0 1 0 0 1 0 0 0 | 34
+The solution space is 7-dimensional which is the reason why specifying x_1, ..., x_7 already determines the whole square. There are 16!/9! = 57.657.600 possibilities to assign distinct numbers between 1 and 16 to the first 7 coefficients of the magic square. This is a number that todays (even yesterdays) processors can cope.
+
+## Performance
+
+My computer finds all 7040 magic squares within 3.42 seconds. But it gets better. While compiling the program one can choose between some optimization settings. These 3.42 seconds can be achieved without any optimization. The following table compares some of the optimization settings.
+
+compile code | run time of compiled program
+-------------|-----------------------------
+`gcc -O0 magic.c` | 3.42 seconds
+`gcc -O1 magic.c` | 1.41 seconds
+`gcc -O2 magic.c` | 1.39 seconds
+`gcc -O3 magic.c` | 1.24 seconds
+
+The best optimized programs runs 276% faster than the one without optimization. I think this is quite amazing.
