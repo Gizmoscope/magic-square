@@ -24,3 +24,21 @@ The best optimized programs runs 276% faster than the one without optimization. 
 ## The naive program
 
 Maybe the trick produces some overhead a naive program wouldn't have. However, under the assumption that the naive program would need 9! = 362880 times longer the my program then it would need about 450.000 seconds = 125 hours which are over 5 days.
+
+## Further improvements
+
+With little changes one can improve the performance of the program. I made three observations.
+
+1. The largest number the program uses in the calculation is 68. These numbers can be stored in a smaller data-type. As expected the computation is a little bit faster with `char`s instead of `int`s. (To be honest: I consider this a cheat rather than an improvement.)
+2. The last three numbers in a square produced by the `check` function are always distinct and in range. There is no need to check these conditions so that the loop can be terminated earlier. (This clearly is an improvement. However, against my expectations the runtime was not considerably faster.)
+3. If two numbers in a row, column or diagonal are large, then the other two need to be small. This can be used to narrow the range of numbers the `find` function tests. (This really improved the runtime noticeably.)
+
+These changes together led to the program `magic_faster.c`. Thinking about the third point I managed to reorganize the way the squares are built to add a futher narrowing of one of the ranges. Actually, the corresponding program `magic_fastest.c` is again faster then the prior versions. Here is a comparison of the run times.
+
+` `       | `magic.c` | `magic_faster.c` | `magic_fastest.c`
+----------|-----------|------------------|------------------
+`gcc -O0` | 3.42 seconds | 1.31 seconds | 1.03 seconds
+`gcc -O1` | 1.41 seconds | 0.60 seconds | 0.46 seconds
+`gcc -O2` | 1.39 seconds | 0.56 seconds | 0.45 seconds
+`gcc -O3` | 1.24 seconds | 0.47 seconds | 0.41 seconds
+
