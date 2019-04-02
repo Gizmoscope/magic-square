@@ -29,7 +29,7 @@ Maybe the trick produces some overhead a naive program wouldn't have. However, u
 
 With little changes one can improve the performance of the program. I made three observations.
 
-1. The largest number the program uses in the calculation is 68. These numbers can be stored in a smaller data-type. As expected the computation is a little bit faster with `char`s instead of `int`s. (To be honest: I consider this a cheat rather than an improvement.)
+1. The largest number the program uses in the calculation is 68. These numbers can be stored in a smaller data-type. As expected the computation is a little bit faster with `char` values instead of `int`values. (To be honest: I consider this a cheat rather than an improvement.)
 2. The last three numbers in a square produced by the `check` function are always distinct and in range. There is no need to check these conditions so that the loop can be terminated earlier. (This clearly is an improvement. However, against my expectations the runtime was not considerably faster.)
 3. If two numbers in a row, column or diagonal are large, then the other two need to be small. This can be used to narrow the range of numbers the `find` function tests. (This really improved the runtime noticeably.)
 
