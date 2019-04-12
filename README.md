@@ -33,12 +33,16 @@ With little changes one can improve the performance of the program. I made three
 2. The last three numbers in a square produced by the `check` function are always distinct and in range. There is no need to check these conditions so that the loop can be terminated earlier. (This clearly is an improvement. However, against my expectations the runtime was not considerably faster.)
 3. If two numbers in a row, column or diagonal are large, then the other two need to be small. This can be used to narrow the range of numbers the `find` function tests. (This really improved the runtime noticeably.)
 
-These changes together led to the program `magic_faster.c`. Thinking about the third point I managed to reorganize the way the squares are built to add a futher narrowing of one of the ranges. Actually, the corresponding program `magic_fastest.c` is again faster then the prior versions. Here is a comparison of the run times.
+These changes together led to the program `magic_faster.c`. Thinking about the third point I managed to reorganize the way the squares are built to add a futher narrowing of one of the ranges. Actually, the corresponding program `magic_fastest.c` is again faster then the prior versions. Following this improvement I found another fact to make use of:
 
-` `       | `magic.c` | `magic_faster.c` | `magic_fastest.c`
-----------|-----------|------------------|------------------
-`gcc -O0` | 3.42 seconds | 1.31 seconds | 1.03 seconds
-`gcc -O1` | 1.41 seconds | 0.60 seconds | 0.46 seconds
-`gcc -O2` | 1.39 seconds | 0.56 seconds | 0.45 seconds
-`gcc -O3` | 1.24 seconds | 0.47 seconds | 0.41 seconds
+4. Given a magic square there is another (different) magic square where every `k` is replaced by `17-k`. An easy calculation shows that all sums are indeed still the same. Therefore, the number of all magic squares is twice the number of those magic squares having 1,2, ..., 8 as first entry.
+
+The last fact is used in `magic_v5.c`. Here is a comparison of the run times.
+
+` `       | `magic.c` | `magic_faster.c` | `magic_fastest.c` | `magic_v5.c`
+----------|-----------|------------------|---------------------------------
+`gcc -O0` | 3.42 seconds | 1.31 seconds | 1.03 seconds | 0.52 seconds
+`gcc -O1` | 1.41 seconds | 0.60 seconds | 0.46 seconds | 0.23 seconds
+`gcc -O2` | 1.39 seconds | 0.56 seconds | 0.45 seconds | 0.23 seconds
+`gcc -O3` | 1.24 seconds | 0.47 seconds | 0.41 seconds | 0.20 seconds
 
