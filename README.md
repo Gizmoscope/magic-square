@@ -37,12 +37,12 @@ These changes together led to the program `magic_faster.c`. Thinking about the t
 
 4. Given a magic square there is another (different) magic square where every `k` is replaced by `17-k`. An easy calculation shows that all sums are indeed still the same. Therefore, the number of all magic squares is twice the number of those magic squares having 1,2, ..., 8 as first entry.
 
-The last fact is used in `magic_v5.c`. The last (maybe obvious) improvement is to use multi-threading which is implemented in `magic_threads.c`. However, for some reason the multithreaded version is slower. Here is a comparison of the run times.
+The last fact is used in `magic_v5.c`. The last (maybe obvious) improvement is to use multi-threading which is implemented in `magic_threads.c`. Here is a comparison of the run times.
 
 ` `       | `magic.c` | `magic_faster.c` | `magic_fastest.c` | `magic_v5.c` | `magic_threads.c`
 ----------|-----------|------------------|-------------------|--------------|------------------
-`gcc -O0` | 3.42 seconds | 1.31 seconds | 1.03 seconds | 0.52 seconds | 0.54 seconds
-`gcc -O1` | 1.41 seconds | 0.60 seconds | 0.46 seconds | 0.23 seconds | 0.24 seconds
-`gcc -O2` | 1.39 seconds | 0.56 seconds | 0.45 seconds | 0.23 seconds | 0.24 seconds
-`gcc -O3` | 1.24 seconds | 0.47 seconds | 0.41 seconds | 0.20 seconds | 0.22 seconds
+`gcc -O0` | 3.42 seconds | 1.31 seconds | 1.03 seconds | 0.52 seconds | 0.19 seconds
+`gcc -O1` | 1.41 seconds | 0.60 seconds | 0.46 seconds | 0.23 seconds | 0.09 seconds
+`gcc -O2` | 1.39 seconds | 0.56 seconds | 0.45 seconds | 0.23 seconds | 0.09 seconds
+`gcc -O3` | 1.24 seconds | 0.47 seconds | 0.41 seconds | 0.20 seconds | 0.08 seconds
 
