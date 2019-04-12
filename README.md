@@ -40,7 +40,7 @@ These changes together led to the program `magic_faster.c`. Thinking about the t
 The last fact is used in `magic_v5.c`. Here is a comparison of the run times.
 
 ` `       | `magic.c` | `magic_faster.c` | `magic_fastest.c` | `magic_v5.c`
-----------|-----------|------------------|---------------------------------
+----------|-----------|------------------|-------------------|-------------
 `gcc -O0` | 3.42 seconds | 1.31 seconds | 1.03 seconds | 0.52 seconds
 `gcc -O1` | 1.41 seconds | 0.60 seconds | 0.46 seconds | 0.23 seconds
 `gcc -O2` | 1.39 seconds | 0.56 seconds | 0.45 seconds | 0.23 seconds
