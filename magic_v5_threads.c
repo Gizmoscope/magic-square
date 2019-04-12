@@ -1,10 +1,9 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
-#include <assert.h>
 #include <pthread.h>
 
-#define NUM_THREADS 8
+#define NUM_THREADS 16
 
 #define min(a,b) (((a)<(b))?(a):(b))
 #define max(a,b) (((a)>(b))?(a):(b))
@@ -100,8 +99,9 @@ void *perform_work(void *arguments){
 }
 
 int main(void) {
-    clock_t prgstart, prgende;
-    prgstart=clock();
+    struct timespec start, finish;
+    double elapsed;
+    clock_gettime(CLOCK_MONOTONIC, &start);
     pthread_t threads[NUM_THREADS];
     int thread_args[NUM_THREADS];
     int i;
@@ -112,18 +112,18 @@ int main(void) {
     //create all threads one by one
     for (i = 0; i < NUM_THREADS; i++) {
         thread_args[i] = i + 1;
-        result_code = pthread_create(&threads[i], NULL, perform_work, &thread_args[i]);
-        assert(!result_code);
+        pthread_create(&threads[i], NULL, perform_work, &thread_args[i]);
     }
 
     //wait for each thread to complete
     for (i = 0; i < NUM_THREADS; i++) {
-        result_code = pthread_join(threads[i], NULL);
-        assert(!result_code);
+        pthread_join(threads[i], NULL);
     }
 
-    prgende=clock();
-    printf("There are %i magic squares.\n", 2 * count);
-    printf("Runtime %.2f seconds\n",(float)(prgende-prgstart) / CLOCKS_PER_SEC);
+    clock_gettime(CLOCK_MONOTONIC, &finish);
+    elapsed = (finish.tv_sec - start.tv_sec);
+    elapsed += (finish.tv_nsec - start.tv_nsec) / 1000000000.0;
+    printf("There are %i magic squares.\n", count);
+    printf("Runtime %.2f seconds\n",elapsed);
     return 0;
 }
