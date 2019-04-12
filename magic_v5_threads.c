@@ -3,7 +3,7 @@
 #include <time.h>
 #include <pthread.h>
 
-#define NUM_THREADS 16
+#define NUM_THREADS 8
 
 #define min(a,b) (((a)<(b))?(a):(b))
 #define max(a,b) (((a)>(b))?(a):(b))
@@ -15,7 +15,7 @@ char check(char v[]) {
     char i, j, a, b, c, d;
 
     char s[16];
-    
+
         s[0] = v[0];
         s[1] = v[1];
         s[2] = v[2];
@@ -38,7 +38,7 @@ char check(char v[]) {
         s[9] = (a + c - d) / 2;
         s[12] = (c + d - a) / 2;
         s[13] = b + (a - c - d) / 2;
-    
+
     for (i = 3; i < 16; i++) {
         if (s[i] < 1 || s[i] > 16) {
             return 0;
@@ -108,14 +108,14 @@ int main(void) {
     int result_code;
 
     pthread_mutex_init (&mutex, NULL);
-    
-    //create all threads one by one
+
+    // create all threads one by one
     for (i = 0; i < NUM_THREADS; i++) {
         thread_args[i] = i + 1;
         pthread_create(&threads[i], NULL, perform_work, &thread_args[i]);
     }
 
-    //wait for each thread to complete
+    // wait for each thread to complete
     for (i = 0; i < NUM_THREADS; i++) {
         pthread_join(threads[i], NULL);
     }
@@ -123,7 +123,7 @@ int main(void) {
     clock_gettime(CLOCK_MONOTONIC, &finish);
     elapsed = (finish.tv_sec - start.tv_sec);
     elapsed += (finish.tv_nsec - start.tv_nsec) / 1000000000.0;
-    printf("There are %i magic squares.\n", count);
+    printf("There are %i magic squares.\n", 2 * count);
     printf("Runtime %.2f seconds\n",elapsed);
     return 0;
 }

@@ -40,9 +40,8 @@ These changes together led to the program `magic_faster.c`. Thinking about the t
 The last fact is used in `magic_v5.c`. The last (maybe obvious) improvement is to use multi-threading which is implemented in `magic_v5_threads.c`. Here is a comparison of the run times.
 
 ` `       | `magic_v1.c` | `magic_v2.c` | `magic_v3.c` | `magic_v4.c` | `magic_v5_threads.c`
-----------|-----------|------------------|-------------------|--------------|------------------
-`gcc -O0` | 3.42 seconds | 1.31 seconds | 1.03 seconds | 0.52 seconds | 0.19 seconds
-`gcc -O1` | 1.41 seconds | 0.60 seconds | 0.46 seconds | 0.23 seconds | 0.09 seconds
-`gcc -O2` | 1.39 seconds | 0.56 seconds | 0.45 seconds | 0.23 seconds | 0.09 seconds
-`gcc -O3` | 1.24 seconds | 0.47 seconds | 0.41 seconds | 0.20 seconds | 0.08 seconds
-
+----------|--------------|--------------|--------------|--------------|---------------------
+`gcc -O0` | 3.42 seconds | 1.31 seconds | 1.03 seconds | 0.52 seconds | 0.11 seconds
+`gcc -O1` | 1.41 seconds | 0.60 seconds | 0.46 seconds | 0.23 seconds | 0.05 seconds
+`gcc -O2` | 1.39 seconds | 0.56 seconds | 0.45 seconds | 0.23 seconds | 0.05 seconds
+`gcc -O3` | 1.24 seconds | 0.47 seconds | 0.41 seconds | 0.20 seconds | 0.05 seconds
