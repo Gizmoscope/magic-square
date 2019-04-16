@@ -43,12 +43,12 @@ char check(char v[]) {
         s[17] = 65 - s[15] - s[16] - s[18] - s[19];
         s[22] = 65 - s[20] - s[21] - s[23] - s[24];
 
-        for (i = 15; i < 23; i++) {
+        for (i = 15; i < 25; i++) {
             if (s[i] < 1 || s[i] > 25) {
                 return 0;
             }
         }
-        for (i = 15; i < 25; i++) {
+        for (i = 4; i < 25; i++) {
             for (j = 0; j < i; j++) {
                 if (s[i] == s[j]) {
                     return 0;
@@ -61,7 +61,7 @@ char check(char v[]) {
 
 int loops = 0;
 
-void find(char square[], char entry, int add, char s4, char s9, char s14) {
+void find(char square[], char entry, int add) {
     char i, j, begin, end;
 
     if (entry == 14) {
@@ -74,10 +74,10 @@ void find(char square[], char entry, int add, char s4, char s9, char s14) {
         return;
     }
 
-    if (entry == 6) {
+    if (entry == 7) {
         pthread_mutex_lock(&mutex);
         loops = loops + 1;
-        printf("%.6f percent (%i found)\n", (float)(loops) / 1275120, count);
+        printf("%.7f percent (%i found)\n", (float)(loops) / 24227280, count);
         pthread_mutex_unlock(&mutex);
     }
 
@@ -117,52 +117,13 @@ void find(char square[], char entry, int add, char s4, char s9, char s14) {
     }
 
     for (i = begin; i <= end; i++) {
-        square[entry] = i;
-        if (entry == 3) {
-            s4 = 65 - square[0] - square[1] - square[2] - square[3];
-            for (j = 0; j < 4; j++) {
-                if (square[j] == s4) {
-                    goto A;
-                }
-            }
-        }
-        if (entry > 3 && i == s4) {
-            goto A;
-        }
-        if (entry == 7) {
-            s9 = 65 - square[4] - square[5] - square[6] - square[7];
-            if(s4 == s9) {
-                goto A;
-            }
-            for (j = 0; j < 8; j++) {
-                if (square[j] == s9) {
-                    goto A;
-                }
-            }
-        }
-        if (entry > 7 && i == s9) {
-            goto A;
-        }
-        if (entry == 11) {
-            s14 = 65 - square[8] - square[9] - square[10] - square[11];
-            if (s4 == s14 || s9 == s14) {
-                goto A;
-            }
-            for (j = 0; j < 12; j++) {
-                if (square[j] == s14) {
-                    goto A;
-                }
-            }
-        }
-        if (entry > 11 && i == s14) {
-            goto A;
-        }
         for (j = 0; j < entry; j++) {
             if (square[j] == i) {
                 goto A;
             }
         }
-        find(square, entry + 1, add, s4, s9, s14);
+        square[entry] = i;
+        find(square, entry + 1, add);
         A: i=i;
     }
 }
@@ -171,7 +132,7 @@ void *perform_work(void *arguments){
     int index = *((int *)arguments);
     char* start = (char*) malloc(14*sizeof(char));
     start[0] = index;
-    find(start, 1, index == 13 ? 1 : 2, 0, 0, 0);
+    find(start, 1, index == 13 ? 1 : 2);
     free(start);
 }
 

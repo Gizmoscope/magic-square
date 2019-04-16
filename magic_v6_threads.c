@@ -45,17 +45,18 @@ char check(char v[]) {
         }
     }
 
-    for (i = 3; i < 16; i++) {
+    for (i = 8; i < 16; i++) {
         for (j = 0; j < i; j++) {
             if (s[i] == s[j]) {
                 return 0;
             }
         }
     }
+
     return 1;
 }
 
-void find(char square[], char entry) {
+void find(char square[], char entry, char s3, char s7) {
     char i, j, begin, end;
 
     if (entry == 7) {
@@ -82,13 +83,38 @@ void find(char square[], char entry) {
     }
 
     for (i = begin; i <= end; i++) {
+        square[entry] = i;
+        if (entry == 2) {
+            s3 = 34 - square[0] - square[1] - square[2];
+            for (j = 0; j < 3; j++) {
+                if (square[j] == s3) {
+                    goto A;
+                }
+            }
+        }
+        if (entry > 2 && i == s3) {
+            goto A;
+        }
+        if (entry == 5) {
+            s7 = 34 - square[3] - square[4] - square[5];
+            if (s3 == s7) {
+                goto A;
+            }
+            for (j = 0; j < 6; j++) {
+                if (square[j] == s7) {
+                    goto A;
+                }
+            }
+        }
+        if (entry > 5 && i == s7) {
+            goto A;
+        }
         for (j = 0; j < entry; j++) {
             if (square[j] == i) {
                 goto A;
             }
         }
-        square[entry] = i;
-        find(square, entry + 1);
+        find(square, entry + 1, s3, s7);
         A: i=i;
     }
 }
@@ -97,7 +123,7 @@ void *perform_work(void *arguments){
     int index = *((int *)arguments);
     char* start = (char*) malloc(7*sizeof(char));
     start[0] = index;
-    find(start, 1);
+    find(start, 1, 0, 0);
     free(start);
 }
 
